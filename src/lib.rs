@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-
 const DEVICES: [(Device, &'static str); 7] = [
     (Device::RoofVent, "roof vent"),
     (Device::AC, "ac"),
@@ -33,7 +32,7 @@ pub enum Device {
 }
 
 impl Device {
-    pub fn from_str(s: &str) -> Option<(Self)> {
+    pub fn from_str(s: &str) -> Result<Self, &str> {
         use Device::*;
         let device_set: HashMap<&str, Device> = DEVICES.iter().map(|(d, s)| (*s, *d)).collect();
 
@@ -43,7 +42,7 @@ impl Device {
             }
         }
 
-        None
+        Err("Bad device name given")
     }
 
     pub fn to_str(&self) -> &str {
@@ -68,7 +67,7 @@ pub enum Action {
 }
 
 impl Action {
-    pub fn from_str(s: &str) -> Option<(Self)> {
+    pub fn from_str(s: &str) -> Result<Self, &str> {
         use Action::*;
         let action_set: HashMap<&str, Action> = ACTIONS.iter().map(|(d, s)| (*s, *d)).collect();
 
@@ -78,7 +77,7 @@ impl Action {
             }
         }
 
-        None
+        Err("Bad Action name given")
     }
 
     pub fn to_str(&self) -> &str {
